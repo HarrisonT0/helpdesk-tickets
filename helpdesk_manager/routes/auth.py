@@ -2,6 +2,11 @@ from flask import current_app as app, request, session, render_template, redirec
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..models.user import User
 from ..database import db
+import re
+
+
+# RegEx pattern matching strings of at least 6 characters with at least 1 number and 1 special character
+PASSWORD_REGEX = re.compile(r"^(?=.*[0-9])(?=.*[\W_]).{6,}$")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -15,8 +20,12 @@ def register():
         confirm_password = request.form.get("confirm_password")
 
         # Validation
-        if password != confirm_password:
+        if not email or not password or not confirm_password:
+            error = "All fields are required."
+        elif password != confirm_password:
             error = "Passwords do not match."
+        elif not PASSWORD_REGEX.match(password):
+            error = "Stronger password required. Must be at least 6 characters, contain at least one number, and contain at least one special character."
         elif User.query.filter_by(email=email).first():
             error = "User with this email already exists. Please Log in."
 
