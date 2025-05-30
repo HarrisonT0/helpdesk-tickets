@@ -60,7 +60,10 @@ def new_ticket():
             db.session.add(ticket)
             db.session.commit()
 
-            flash("Ticket created")
+            flash(
+                "Ticket created - an admin will be in contact via email shortly",
+                "success",
+            )
             return redirect(url_for("list_tickets"))
 
     return render_template("tickets/new.html", error=error)

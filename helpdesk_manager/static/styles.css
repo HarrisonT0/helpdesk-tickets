@@ -115,7 +115,6 @@ header {
 }
 
 .flash-banner {
-  background: green;
   width: 10px;
   height: calc(100% - 2px);
   position: absolute;
@@ -123,6 +122,10 @@ header {
   top: 1px;
   border-top-left-radius: 2.5px;
   border-bottom-left-radius: 2.5px;
+}
+
+.success {
+  background: green;
 }
 
 @keyframes fadeout {
