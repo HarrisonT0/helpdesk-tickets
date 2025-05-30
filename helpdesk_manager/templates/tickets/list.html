@@ -11,7 +11,7 @@
         <ul>
         {% for ticket in tickets %}
             <li>
-                <strong>{{ ticket.title }}</strong>
+                <strong><a href="/ticket/{{ ticket.id }}">{{ ticket.title }}</a></strong>
                 <br />
                 <small>Author: {{ ticket.author.email }}</small>
             </li>
