@@ -8,7 +8,12 @@ def create_app():
     # Database
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///helpdesk.db"
     db.init_app(app)
+
+    # App context
     with app.app_context():
         db.create_all()
+
+        # Routes
+        import helpdesk_manager.routes.login
 
     return app
