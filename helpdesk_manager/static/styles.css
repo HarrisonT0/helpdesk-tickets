@@ -31,7 +31,7 @@ body {
   padding-inline: 50px;
 }
 
-button[type=submit] {
+.main-button {
   width: 100%;
 }
 

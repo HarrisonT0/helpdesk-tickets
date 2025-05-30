@@ -12,7 +12,7 @@
             <label for="content">Content:</label><br>
             <textarea name="content" id="content" rows="6" required>{{ ticket.content }}</textarea><br><br>
 
-            <button type="submit">Save Changes</button>
+            <button type="submit" class="main-button">Save Changes</button>
             {% if error %}
                 <p style="color:red;">{{ error }}</p>
             {% endif %}
