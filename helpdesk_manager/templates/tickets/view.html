@@ -9,7 +9,11 @@
             <p><i class="bi bi-person"></i> Author: {{ ticket.author.email }}</p>
             <p><i class="bi bi-clock"></i> Created at: {{ ticket.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
             <p>{{ ticket.content }}</p>
-            <a href="/tickets/{{ ticket.id }}/edit"><button class="main-button">Edit ticket</button></a>
+            {% if ticket.author.id == user.id %}
+                <a href="/tickets/{{ ticket.id }}/edit"><button class="main-button">Edit ticket</button></a>
+            {% elif user.admin %}
+                <button class="main-button">Delete ticket as resolved</button>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
