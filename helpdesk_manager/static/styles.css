@@ -2,6 +2,11 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+button {
+  font-size: 1rem;
+  padding-block: 5px;
+}
+
 /* Forms and alike */
 
 .box {
@@ -73,6 +78,14 @@ input {
   .ticket-list-entry > footer {
     flex-direction: row;
   }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 800px;
+  width: 100%;
+  align-items: center;
 }
 
 /* Flashes */
