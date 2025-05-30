@@ -61,6 +61,16 @@ textarea {
   resize: vertical;
 }
 
+.danger {
+  background: #ff4444;
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.danger:hover {
+  background: #ff6666;
+}
+
 /* Tickets */
 
 .ticket-list {

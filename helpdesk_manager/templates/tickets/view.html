@@ -12,7 +12,9 @@
             {% if ticket.author.id == user.id %}
                 <a href="/tickets/{{ ticket.id }}/edit"><button class="main-button">Edit ticket</button></a>
             {% elif user.admin %}
-                <button class="main-button">Delete ticket as resolved</button>
+                <form action="/tickets/{{ ticket.id }}/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this ticket?');">
+                    <button type="submit" class="main-button danger">Delete ticket as resolved</button>
+                </form>
             {% endif %}
         </div>
     </div>
