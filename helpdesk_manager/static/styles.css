@@ -12,7 +12,7 @@ form {
   width: 100%;
 }
 
-.form-container {
+.centered-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,6 +48,11 @@ input {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  padding-left: 0;
+  margin-left: 0;
+  text-align: left;
 }
 
 .ticket-list-entry {
