@@ -28,6 +28,6 @@ def register():
             db.session.commit()
 
             session["user_id"] = user.id
-            redirect("/")
+            return redirect("/")
 
     return render_template("auth/register.html", error=error)
