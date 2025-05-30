@@ -111,6 +111,18 @@ header {
   border: 1px solid black;
   box-shadow: 0 0 20px #333333;
   background: white;
+  display: flex;
+}
+
+.flash-banner {
+  background: green;
+  width: 10px;
+  height: calc(100% - 2px);
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  border-top-left-radius: 2.5px;
+  border-bottom-left-radius: 2.5px;
 }
 
 @keyframes fadeout {
