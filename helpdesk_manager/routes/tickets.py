@@ -16,7 +16,7 @@ def list_tickets():
     return render_template("tickets/list.html", tickets=tickets)
 
 
-@app.route("/ticket/new", methods=["GET", "POST"])
+@app.route("/tickets/new", methods=["GET", "POST"])
 def new_ticket():
     if "user_id" not in session:
         return redirect(url_for("login"))

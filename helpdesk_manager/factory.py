@@ -21,6 +21,6 @@ def create_app():
         # Register routes
         import helpdesk_manager.routes.login
         import helpdesk_manager.routes.register
-        import helpdesk_manager.routes.ticket
+        import helpdesk_manager.routes.tickets
 
     return app
