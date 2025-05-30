@@ -109,6 +109,7 @@ def edit_ticket(ticket_id):
 
 # Delete ticket
 @app.route("/tickets/<ticket_id>/delete", methods=["POST"])
+@require_auth
 def delete_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
 
