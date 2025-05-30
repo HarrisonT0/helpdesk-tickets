@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Ticket{% endblock %}
+
+{% block content %}
+    <div class="centered-container">
+        <form action="/tickets/{{ ticket.id }}/edit" method="POST" class="box">
+            <h1>Edit Ticket</h1>
+            <label for="title">Title:</label><br>
+            <input type="text" name="title" id="title" value="{{ ticket.title }}" required /><br><br>
+
+            <label for="content">Content:</label><br>
+            <textarea name="content" id="content" rows="6" required>{{ ticket.content }}</textarea><br><br>
+
+            <button type="submit">Save Changes</button>
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}

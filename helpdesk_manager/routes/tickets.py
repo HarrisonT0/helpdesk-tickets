@@ -67,3 +67,34 @@ def new_ticket():
             return redirect(url_for("list_tickets"))
 
     return render_template("tickets/new.html", error=error)
+
+
+@app.route("/tickets/<ticket_id>/edit", methods=["GET", "POST"])
+@require_auth
+def edit_ticket(ticket_id):
+    error = None
+    ticket = Ticket.query.get_or_404(ticket_id)
+
+    # Check user is author of ticket
+    if ticket.author_id != g.user.id:
+        flash("You do not have permission to edit this ticket.", "error")
+        return redirect("/tickets")
+
+    if request.method == "POST":
+        # Get form inputs
+        title = request.form.get("title")
+        content = request.form.get("content")
+
+        # Validation
+        if not title:
+            error = "Title is required."
+        elif not content:
+            error = "Content is required."
+
+        ticket.title = title
+        ticket.content = content
+        db.session.commit()
+        flash("Ticket updated successfully.", "success")
+        return redirect(f"/tickets/{ticket.id}")
+
+    return render_template("tickets/edit.html", ticket=ticket, error=error)
