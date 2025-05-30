@@ -57,3 +57,9 @@ def login():
             return redirect("/")
 
     return render_template("auth/login.html", error=error)
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
