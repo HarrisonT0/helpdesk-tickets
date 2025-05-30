@@ -51,6 +51,16 @@ input {
   padding: 5px;
 }
 
+textarea {
+  width: inherit;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1rem;
+  padding: 5px;
+  resize: vertical;
+}
+
 /* Tickets */
 
 .ticket-list {
