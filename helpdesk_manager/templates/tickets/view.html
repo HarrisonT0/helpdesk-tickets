@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Tickets</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block title %}Ticket{% endblock %}
+
+{% block content %}
     <h1>{{ ticket.title }}</h1>
     <p><strong>Author:</strong> {{ ticket.author.email }}</p>
     <p>{{ ticket.content }}</p>
-</body>
-</html>
+{% endblock %}

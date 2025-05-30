@@ -1,26 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body class="form-container">
-    <form action="/register" method="POST">
-        <h1>Register</h1>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required /><br /><br />
+{% extends "layout.html" %}
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required /><br /><br />
+{% block title %}Register{% endblock %}
 
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" name="confirm_password" id="confirm_password" required /><br /><br />
+{% block content %}
+    <div class="form-container">
+        <form action="/register" method="POST">
+            <h1>Register</h1>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required /><br /><br />
 
-        <button type="submit">Register</button>
-        {% if error %}
-            <p style="color:red;">{{ error }}</p>
-        {% endif %}
-    </form>
-</body>
-</html>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required /><br /><br />
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" name="confirm_password" id="confirm_password" required /><br /><br />
+
+            <button type="submit">Register</button>
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}

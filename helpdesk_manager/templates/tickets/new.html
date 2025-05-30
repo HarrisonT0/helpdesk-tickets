@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>New Ticket</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body class="form-container">
-    <form action="/tickets/new" method="POST">
-        <h1>New Ticket</h1>
-        <label for="title">Title:</label>
-        <input name="title" id="title" required /><br /><br />
+{% extends "layout.html" %}
 
-        <label for="content">Content:</label>
-        <input name="content" id="content" required /><br /><br />
+{% block title %}New Ticket{% endblock %}
 
-        <button type="submit">Create ticket</button>
-        {% if error %}
-            <p style="color:red;">{{ error }}</p>
-        {% endif %}
-    </form>
-</body>
-</html>
+{% block content %}
+    <div class="form-container">
+        <form action="/tickets/new" method="POST">
+            <h1>New Ticket</h1>
+            <label for="title">Title:</label>
+            <input name="title" id="title" required /><br /><br />
+
+            <label for="content">Content:</label>
+            <input name="content" id="content" required /><br /><br />
+
+            <button type="submit">Create ticket</button>
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}
