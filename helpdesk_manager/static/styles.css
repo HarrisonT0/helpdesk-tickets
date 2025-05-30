@@ -20,4 +20,21 @@ body {
 button[type=submit] {
   width: 100%;
   font-size: 1rem;
+  padding-block: 5px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  display: block;
+  width: inherit;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid black;
+  height: 30px;
+  font-size: 1rem;
+  padding: 5px;
 }
