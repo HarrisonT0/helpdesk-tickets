@@ -1,5 +1,6 @@
 from flask import Flask
 from .database import db
+from .utils.seed_database import seed_database
 from werkzeug.security import generate_password_hash
 
 
@@ -18,16 +19,7 @@ def create_app():
         from helpdesk_manager.models.ticket import Ticket
 
         db.create_all()
-
-        # Create (upsert) admin account
-        if not User.query.filter_by(email="admin@company.com").first():
-            admin = User(
-                email="admin@company.com",
-                password_hash=generate_password_hash("password"),
-                admin=True,
-            )
-            db.session.add(admin)
-            db.session.commit()
+        seed_database()
 
         # Register routes
         import helpdesk_manager.routes.home
