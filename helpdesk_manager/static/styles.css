@@ -138,6 +138,10 @@ header {
   background: green;
 }
 
+.error {
+  background: red;
+}
+
 @keyframes fadeout {
   0% { opacity: 1; }
   80% { opacity: 1; }

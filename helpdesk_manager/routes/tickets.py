@@ -61,7 +61,7 @@ def new_ticket():
             db.session.commit()
 
             flash(
-                "Ticket created - an admin will be in contact via email shortly",
+                "Ticket created - an admin will be in contact via email shortly.",
                 "success",
             )
             return redirect(url_for("list_tickets"))
