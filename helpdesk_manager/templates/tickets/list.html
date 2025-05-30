@@ -9,12 +9,12 @@
     <h1>Tickets</h1>
 
     {% if tickets %}
-        <ul>
+        <ul class="ticket-list">
         {% for ticket in tickets %}
-            <li>
-                <strong><a href="/tickets/{{ ticket.id }}">{{ ticket.title }}</a></strong>
+            <li class="ticket-list-entry">
+                <h2><a href="/tickets/{{ ticket.id }}">{{ ticket.title }}</a></h2>
                 <br />
-                <small>Author: {{ ticket.author.email }}</small>
+                <p>Author: {{ ticket.author.email }}</p>
             </li>
         {% endfor %}
         </ul>
