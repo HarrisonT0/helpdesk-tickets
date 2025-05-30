@@ -5,6 +5,7 @@ from flask import (
     render_template,
     redirect,
     url_for,
+    flash,
 )
 from helpdesk_manager.models.ticket import Ticket
 from ..database import db
@@ -47,6 +48,7 @@ def new_ticket():
             db.session.add(ticket)
             db.session.commit()
 
+            flash("Ticket created")
             return redirect(url_for("list_tickets"))
 
     return render_template("tickets/new.html", error=error)

@@ -72,3 +72,29 @@ input {
     flex-direction: row;
   }
 }
+
+/* Flashes */
+
+.flashes {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flash {
+  padding: 1rem;
+  border-radius: 5px;
+  animation: fadeout 4s ease forwards;
+  border: 1px solid black;
+  box-shadow: 0 0 20px #333333;
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
