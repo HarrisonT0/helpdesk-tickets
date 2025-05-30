@@ -19,8 +19,7 @@ def create_app():
         db.create_all()
 
         # Register routes
-        import helpdesk_manager.routes.login
-        import helpdesk_manager.routes.register
+        import helpdesk_manager.routes.auth
         import helpdesk_manager.routes.tickets
 
     return app
