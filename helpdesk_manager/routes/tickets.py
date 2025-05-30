@@ -12,7 +12,7 @@ from ..database import db
 
 @app.route("/tickets")
 def list_tickets():
-    tickets = Ticket.query.all()
+    tickets = Ticket.query.order_by(Ticket.created_at.desc()).all()
     return render_template("tickets/list.html", tickets=tickets)
 
 
