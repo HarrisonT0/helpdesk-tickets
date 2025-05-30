@@ -31,6 +31,9 @@ def list_tickets():
 @require_auth
 def view_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
+    if (not g.user.admin) and (g.user.id != ticket.author.id):
+        flash("You do not have permission to view this ticket.", "error")
+        return redirect("/tickets")
     return render_template("tickets/view.html", ticket=ticket)
 
 
@@ -64,7 +67,7 @@ def new_ticket():
                 "Ticket created - an admin will be in contact via email shortly.",
                 "success",
             )
-            return redirect(url_for("list_tickets"))
+            return redirect("/tickets")
 
     return render_template("tickets/new.html", error=error)
 
