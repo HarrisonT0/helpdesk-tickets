@@ -60,3 +60,15 @@ input {
   border: 1px solid black;
   padding: 10px;
 }
+
+.ticket-list-entry > footer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  .ticket-list-entry > footer {
+    flex-direction: row;
+  }
+}
