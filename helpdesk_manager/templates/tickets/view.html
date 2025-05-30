@@ -3,7 +3,12 @@
 {% block title %}Ticket{% endblock %}
 
 {% block content %}
-    <h1>{{ ticket.title }}</h1>
-    <p><strong>Author:</strong> {{ ticket.author.email }}</p>
-    <p>{{ ticket.content }}</p>
+    <div class="centered-container">
+        <div class="box">
+            <h1>{{ ticket.title }}</h1>
+            <p><i class="bi bi-person"></i> Author: {{ ticket.author.email }}</p>
+            <p><i class="bi bi-clock"></i> Created at: {{ ticket.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
+            <p>{{ ticket.content }}</p>
+        </div>
+    </div>
 {% endblock %}

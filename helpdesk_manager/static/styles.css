@@ -2,9 +2,9 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Forms */
+/* Forms and alike */
 
-form {
+.box {
   border: 1px solid black;
   border-radius: 10px;
   padding: 10px;
