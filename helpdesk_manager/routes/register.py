@@ -30,4 +30,4 @@ def register():
             session["user_id"] = user.id
             redirect("/")
 
-    return render_template("register.html", error=error)
+    return render_template("auth/register.html", error=error)

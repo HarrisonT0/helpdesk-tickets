@@ -20,4 +20,4 @@ def login():
             session["user_id"] = user.id
             return redirect("/")
 
-    return render_template("login.html", error=error)
+    return render_template("auth/login.html", error=error)
