@@ -15,6 +15,7 @@
                 <h2><a href="/tickets/{{ ticket.id }}">{{ ticket.title }}</a></h2>
                 <br />
                 <p>Author: {{ ticket.author.email }}</p>
+                <p>Created at: {{ ticket.created_at }}</p>
             </li>
         {% endfor %}
         </ul>

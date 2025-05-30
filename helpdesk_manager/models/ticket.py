@@ -1,7 +1,8 @@
 from ..database import db
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, DateTime
+from datetime import datetime
 
 
 class Ticket(db.Model):
@@ -12,6 +13,7 @@ class Ticket(db.Model):
     )
     title: Mapped[str] = mapped_column(String(128), nullable=False)
     content: Mapped[str] = mapped_column(String(512), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
 
     author_id: Mapped[str] = mapped_column(
         ForeignKey("user.id", ondelete="CASCADE"), nullable=False
