@@ -7,6 +7,12 @@ button {
   padding-block: 5px;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  background: #dddddd;
+}
+
 /* Forms and alike */
 
 .box {
@@ -22,13 +28,11 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  padding-inline: 50px;
 }
 
 button[type=submit] {
   width: 100%;
-  font-size: 1rem;
-  padding-block: 5px;
 }
 
 label {
@@ -113,4 +117,22 @@ header {
   0% { opacity: 1; }
   80% { opacity: 1; }
   100% { opacity: 0; display: none; }
+}
+
+/* Navigation */
+
+nav {
+  background: white;
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.navbar-options {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding-block: 15px;
 }
