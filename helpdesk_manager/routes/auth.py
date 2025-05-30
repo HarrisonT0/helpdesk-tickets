@@ -1,4 +1,4 @@
-from flask import current_app as app, request, session, render_template, redirect
+from flask import current_app as app, request, session, render_template, redirect, g
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..models.user import User
 from ..database import db
@@ -63,3 +63,17 @@ def login():
 def logout():
     session.clear()
     return redirect("/")
+
+
+# Inject user object into template for fine-grain ACG handling
+@app.before_request
+def load_logged_in_user():
+    user_id = session.get("user_id")
+    g.user = None
+    if user_id is not None:
+        g.user = User.query.get(user_id)
+
+
+@app.context_processor
+def inject_user():
+    return dict(user=g.get("user", None))
