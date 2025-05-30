@@ -16,6 +16,12 @@ def list_tickets():
     return render_template("tickets/list.html", tickets=tickets)
 
 
+@app.route("/tickets/<ticket_id>")
+def view_ticket(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    return render_template("tickets/view.html", ticket=ticket)
+
+
 @app.route("/tickets/new", methods=["GET", "POST"])
 def new_ticket():
     if "user_id" not in session:
@@ -41,6 +47,6 @@ def new_ticket():
             db.session.add(ticket)
             db.session.commit()
 
-            return redirect("/")
+            return redirect(url_for("list_tickets"))
 
     return render_template("tickets/new.html", error=error)
