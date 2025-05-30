@@ -10,6 +10,12 @@ from helpdesk_manager.models.ticket import Ticket
 from ..database import db
 
 
+@app.route("/tickets")
+def list_tickets():
+    tickets = Ticket.query.all()
+    return render_template("tickets/list.html", tickets=tickets)
+
+
 @app.route("/ticket/new", methods=["GET", "POST"])
 def new_ticket():
     if "user_id" not in session:
