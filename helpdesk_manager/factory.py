@@ -30,6 +30,7 @@ def create_app():
             db.session.commit()
 
         # Register routes
+        import helpdesk_manager.routes.home
         import helpdesk_manager.routes.auth
         import helpdesk_manager.routes.tickets
 
