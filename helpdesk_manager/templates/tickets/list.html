@@ -10,9 +10,9 @@
         </header>
 
         {% if tickets %}
-            <ul class="ticket-list">
+            <ul class="list">
             {% for ticket in tickets %}
-                <li class="ticket-list-entry">
+                <li class="list-entry">
                     <h2><a href="/tickets/{{ ticket.id }}">{{ ticket.title }}</a></h2>
                     <br />
                     <footer>

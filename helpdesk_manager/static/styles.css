@@ -72,9 +72,9 @@ textarea {
   background: #ff6666;
 }
 
-/* Tickets */
+/* Lists (tickets and users) */
 
-.ticket-list {
+.list {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -86,21 +86,21 @@ textarea {
   text-align: left;
 }
 
-.ticket-list-entry {
+.list-entry {
   border-radius: 5px;
   border: 1px solid black;
   padding: 10px;
   background: white;
 }
 
-.ticket-list-entry > footer {
+.list-entry > footer {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 }
 
 @media (min-width: 600px) {
-  .ticket-list-entry > footer {
+  .list-entry > footer {
     flex-direction: row;
   }
 }

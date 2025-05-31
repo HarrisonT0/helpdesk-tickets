@@ -10,9 +10,9 @@
         </header>
 
         {% if users %}
-            <ul>
+            <ul class="list">
             {% for current_user in users %}
-                <li>
+                <li class="list-entry">
                     <h2>{{ current_user.email }}</h2>
                 </li>
             {% endfor %}
