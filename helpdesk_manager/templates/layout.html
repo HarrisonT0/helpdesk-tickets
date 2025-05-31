@@ -11,6 +11,11 @@
     <ul class="navbar-options">
       <li><a href="/">Home</a></li>
       <li><a href="/tickets">Tickets</a></li>
+      {% if user %}
+        {% if user.admin %}
+          <li><a href="/users">Users</a></li>
+        {% endif %}
+      {% endif %}
       {% if session.get('user_id') %}
         <li><a href="/logout">Logout</a></li>
       {% else %}
