@@ -22,7 +22,9 @@
                       {% else %}
                         <button class="main-button">Promote to admin</button>
                       {% endif %}
-                      <button class="main-button danger">Delete user</button>
+                        <form action="/users/{{ current_user.id }}/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');" style="width: 100%;">
+                          <button type="submit" class="main-button danger">Delete user</button>
+                        </form>
                     </footer>
                 </li>
             {% endfor %}

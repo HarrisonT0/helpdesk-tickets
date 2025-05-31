@@ -21,5 +21,23 @@ def list_users():
         flash("You do not have permission to view users.", "error")
         return redirect("/")
 
-    users = User.query.with_entities(User.id, User.email, User.created_at, User.admin).all()
+    users = User.query.with_entities(
+        User.id, User.email, User.created_at, User.admin
+    ).all()
     return render_template("/users/list.html", users=users)
+
+
+# Delete user
+@app.route("/users/<user_id>/delete", methods=["POST"])
+@require_auth
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if not g.user.admin:
+        flash("You do not have permission to delete this user.", "error")
+        return redirect("/users")
+
+    db.session.delete(user)
+    db.session.commit()
+    flash("User resolved and deleted.", "success")
+    return redirect("/users")
