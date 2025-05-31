@@ -25,5 +25,6 @@ def create_app():
         import helpdesk_manager.routes.home
         import helpdesk_manager.routes.auth
         import helpdesk_manager.routes.tickets
+        import helpdesk_manager.routes.users
 
     return app
