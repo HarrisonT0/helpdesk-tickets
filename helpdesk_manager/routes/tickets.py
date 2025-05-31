@@ -42,9 +42,6 @@ def view_ticket(ticket_id):
 @app.route("/tickets/new", methods=["GET", "POST"])
 @require_auth
 def new_ticket():
-    if "user_id" not in session:
-        return redirect("/login")
-
     error = None
 
     if request.method == "POST":
