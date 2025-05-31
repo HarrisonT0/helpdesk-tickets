@@ -107,11 +107,11 @@ def edit_ticket(ticket_id):
 @app.route("/tickets/<ticket_id>/delete", methods=["POST"])
 @require_auth
 def delete_ticket(ticket_id):
-    ticket = Ticket.query.get_or_404(ticket_id)
-
     if not g.user.admin:
         flash("You do not have permission to delete this ticket.", "error")
         return redirect("/tickets")
+
+    ticket = Ticket.query.get_or_404(ticket_id)
 
     db.session.delete(ticket)
     db.session.commit()

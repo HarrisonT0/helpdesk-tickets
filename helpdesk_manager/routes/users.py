@@ -31,11 +31,11 @@ def list_users():
 @app.route("/users/<user_id>/delete", methods=["POST"])
 @require_auth
 def delete_user(user_id):
-    user = User.query.get_or_404(user_id)
-
     if not g.user.admin:
         flash("You do not have permission to delete this user.", "error")
         return redirect("/users")
+
+    user = User.query.get_or_404(user_id)
 
     db.session.delete(user)
     db.session.commit()
@@ -51,11 +51,11 @@ def delete_user(user_id):
 @app.route("/users/<user_id>/promote", methods=["POST"])
 @require_auth
 def promote_user(user_id):
-    user = User.query.get_or_404(user_id)
-
     if not g.user.admin:
         flash("You do not have permission to promote this user.", "error")
         return redirect("/users")
+
+    user = User.query.get_or_404(user_id)
 
     user.admin = True
     db.session.commit()
@@ -68,11 +68,11 @@ def promote_user(user_id):
 @app.route("/users/<user_id>/demote", methods=["POST"])
 @require_auth
 def demote_user(user_id):
-    user = User.query.get_or_404(user_id)
-
     if not g.user.admin:
         flash("You do not have permission to demote this user.", "error")
         return redirect("/users")
+
+    user = User.query.get_or_404(user_id)
 
     user.admin = False
     db.session.commit()
