@@ -1,3 +1,9 @@
 {% extends "layout.html" %}
 
 {% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="centered-container">
+  <h1>Welcome back, {{ user.email.split("@")[0] }}</h1>
+</div>
+{% endblock %}

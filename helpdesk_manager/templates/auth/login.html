@@ -3,19 +3,19 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="centered-container">
-        <form action="/login" method="POST" class="box">
-            <h1>Login</h1>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required /><br /><br />
+<div class="centered-container">
+  <form action="/login" method="POST" class="box">
+    <h1>Login</h1>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required /><br /><br />
 
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required /><br /><br />
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required /><br /><br />
 
-            <button type="submit" class="main-button">Log in</button>
-            {% if error %}
-                <p style="color:red;">{{ error }}</p>
-            {% endif %}
-        </form>
-    </div>
+    <button type="submit" class="main-button">Log in</button>
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+  </form>
+</div>
 {% endblock %}

@@ -3,39 +3,41 @@
 {% block title %}Users{% endblock %}
 
 {% block content %}
-    <div class="centered-container">
-        <header>
-            <h1>All Users</h1>
-            <a href="/register"><button><i class="bi bi-plus"></i> Register new user</button></a>
-        </header>
+<div class="centered-container">
+  <header>
+    <h1>All Users</h1>
+    <a href="/register"><button><i class="bi bi-plus"></i> Register new user</button></a>
+  </header>
 
-        {% if users %}
-            <ul class="list">
-            {% for current_user in users %}
-                <li class="list-entry">
-                    <h2>{{ current_user.email }}</h2>
-                    <p><i class="bi bi-person"></i> Permissions: {{ "Admin" if current_user.admin else "Regular" }}</p>
-                    <p><i class="bi bi-clock"></i> Created at: {{ current_user.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
-                    <footer>
-                      {% if current_user.admin %}
-                        <form action="/users/{{ current_user.id }}/demote" method="POST" onsubmit="return confirm('Are you sure you want to demote this user?');" style="width: 100%;">
-                          <button type="submit" class="main-button">Demote to regular</button>
-                        </form>
-                      {% else %}
-                        <form action="/users/{{ current_user.id }}/promote" method="POST" onsubmit="return confirm('Are you sure you want to promote this user?');" style="width: 100%;">
-                          <button type="submit" class="main-button">Promote to admin</button>
-                        </form>
-                      {% endif %}
-                        <form action="/users/{{ current_user.id }}/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');" style="width: 100%;">
-                          <button type="submit" class="main-button danger">Delete user</button>
-                        </form>
-                    </footer>
-                </li>
-            {% endfor %}
-            </ul>
+  {% if users %}
+  <ul class="list">
+    {% for current_user in users %}
+    <li class="list-entry">
+      <h2>{{ current_user.email }}</h2>
+      <p><i class="bi bi-person"></i> Permissions: {{ "Admin" if current_user.admin else "Regular" }}</p>
+      <p><i class="bi bi-clock"></i> Created at: {{ current_user.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
+      <footer>
+        {% if current_user.admin %}
+        <form action="/users/{{ current_user.id }}/demote" method="POST"
+          onsubmit="return confirm('Are you sure you want to demote this user?');" style="width: 100%;">
+          <button type="submit" class="main-button">Demote to regular</button>
+        </form>
         {% else %}
-            <p>No users found.</p>
+        <form action="/users/{{ current_user.id }}/promote" method="POST"
+          onsubmit="return confirm('Are you sure you want to promote this user?');" style="width: 100%;">
+          <button type="submit" class="main-button">Promote to admin</button>
+        </form>
         {% endif %}
-    </div>
+        <form action="/users/{{ current_user.id }}/delete" method="POST"
+          onsubmit="return confirm('Are you sure you want to delete this user?');" style="width: 100%;">
+          <button type="submit" class="main-button danger">Delete user</button>
+        </form>
+      </footer>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No users found.</p>
+  {% endif %}
+</div>
 {% endblock %}
-
