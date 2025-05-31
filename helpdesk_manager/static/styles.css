@@ -96,6 +96,7 @@ textarea {
 .list-entry > footer {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   flex-direction: column;
 }
 

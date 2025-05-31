@@ -21,5 +21,5 @@ def list_users():
         flash("You do not have permission to view users.", "error")
         return redirect("/")
 
-    users = User.query.with_entities(User.id, User.email, User.created_at).all()
+    users = User.query.with_entities(User.id, User.email, User.created_at, User.admin).all()
     return render_template("/users/list.html", users=users)

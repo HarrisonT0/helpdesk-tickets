@@ -13,10 +13,13 @@
             <ul class="list">
             {% for current_user in users %}
                 <li class="list-entry">
-                    <div>
-                      <h2>{{ current_user.email }}</h2>
-                      <p><i class="bi bi-clock"></i> Created at: {{ current_user.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
-                    </div>
+                    <h2>{{ current_user.email }}</h2>
+                    <p><i class="bi bi-person"></i> Permissions: {{ "Admin" if current_user.admin else "Regular" }}</p>
+                    <p><i class="bi bi-clock"></i> Created at: {{ current_user.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
+                    <footer>
+                      <button class="main-button">Promote to admin</button>
+                      <button class="main-button danger">Delete user</button>
+                    </footer>
                 </li>
             {% endfor %}
             </ul>
