@@ -40,4 +40,8 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     flash("User resolved and deleted.", "success")
+
+    # Force logout if user deleted their own account
+    if user == g.user:
+        return redirect("/logout")
     return redirect("/users")
