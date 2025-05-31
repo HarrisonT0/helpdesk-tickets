@@ -20,7 +20,9 @@
                       {% if current_user.admin %}
                         <button class="main-button">Demote to regular</button>
                       {% else %}
-                        <button class="main-button">Promote to admin</button>
+                        <form action="/users/{{ current_user.id }}/promote" method="POST" onsubmit="return confirm('Are you sure you want to promote this user?');" style="width: 100%;">
+                          <button type="submit" class="main-button">Promote to admin</button>
+                        </form>
                       {% endif %}
                         <form action="/users/{{ current_user.id }}/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');" style="width: 100%;">
                           <button type="submit" class="main-button danger">Delete user</button>

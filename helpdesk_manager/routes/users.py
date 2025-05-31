@@ -39,9 +39,26 @@ def delete_user(user_id):
 
     db.session.delete(user)
     db.session.commit()
-    flash("User resolved and deleted.", "success")
+    flash("User deleted.", "success")
 
     # Force logout if user deleted their own account
     if user == g.user:
         return redirect("/logout")
+    return redirect("/users")
+
+
+# Promote user to admin
+@app.route("/users/<user_id>/promote", methods=["POST"])
+@require_auth
+def promote_user(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if not g.user.admin:
+        flash("You do not have permission to promote this user.", "error")
+        return redirect("/users")
+
+    user.admin = True
+    db.session.commit()
+    flash("User promoted.", "success")
+
     return redirect("/users")
