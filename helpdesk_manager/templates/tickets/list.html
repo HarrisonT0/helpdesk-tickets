@@ -5,7 +5,7 @@
 {% block content %}
     <div class="centered-container">
         <header>
-            <h1>{% if user.admin %} All {% else %} My {% endif %} Tickets</h1>
+            <h1>{{ "All" if user.admin else "My" }} Tickets</h1>
             <a href="/tickets/new"><button><i class="bi bi-plus"></i> Create ticket</button></a>
         </header>
 
