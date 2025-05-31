@@ -4,7 +4,6 @@ from flask import (
     session,
     render_template,
     redirect,
-    url_for,
     flash,
     g,
 )
@@ -44,7 +43,7 @@ def view_ticket(ticket_id):
 @require_auth
 def new_ticket():
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect("/login")
 
     error = None
 

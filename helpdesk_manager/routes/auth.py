@@ -71,7 +71,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/")
+    return redirect("/login")
 
 
 # Inject user object into template for fine-grain ACG handling
