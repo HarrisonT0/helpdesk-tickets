@@ -18,7 +18,9 @@
                     <p><i class="bi bi-clock"></i> Created at: {{ current_user.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
                     <footer>
                       {% if current_user.admin %}
-                        <button class="main-button">Demote to regular</button>
+                        <form action="/users/{{ current_user.id }}/demote" method="POST" onsubmit="return confirm('Are you sure you want to demote this user?');" style="width: 100%;">
+                          <button type="submit" class="main-button">Demote to regular</button>
+                        </form>
                       {% else %}
                         <form action="/users/{{ current_user.id }}/promote" method="POST" onsubmit="return confirm('Are you sure you want to promote this user?');" style="width: 100%;">
                           <button type="submit" class="main-button">Promote to admin</button>

@@ -62,3 +62,20 @@ def promote_user(user_id):
     flash("User promoted.", "success")
 
     return redirect("/users")
+
+
+# Demote (admin) user to regular
+@app.route("/users/<user_id>/demote", methods=["POST"])
+@require_auth
+def demote_user(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if not g.user.admin:
+        flash("You do not have permission to demote this user.", "error")
+        return redirect("/users")
+
+    user.admin = False
+    db.session.commit()
+    flash("User demoted.", "success")
+
+    return redirect("/users")
