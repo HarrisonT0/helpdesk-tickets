@@ -5,5 +5,11 @@
 {% block content %}
 <div class="centered-container">
   <h1>Welcome back, {{ user.email.split("@")[0] }}</h1>
+  <div class="home-options">
+    <a href="/tickets"><button class="home-option">View tickets here</button></a>
+    {% if user.admin %}
+    <a href="/users"><button class="home-option">View users here</button></a>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
