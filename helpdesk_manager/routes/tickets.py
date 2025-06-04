@@ -8,6 +8,7 @@ from flask import (
     g,
 )
 from helpdesk_manager.models.ticket import Ticket
+from helpdesk_manager.models.comment import Comment
 from ..database import db
 from ..utils.require_auth import require_auth
 
@@ -35,7 +36,12 @@ def view_ticket(ticket_id):
     if (not g.user.admin) and (g.user.id != ticket.author.id):
         flash("You do not have permission to view this ticket.", "error")
         return redirect("/tickets")
-    return render_template("tickets/view.html", ticket=ticket)
+    comments = (
+        Comment.query.filter_by(ticket_id=ticket_id)
+        .order_by(Comment.created_at.desc())
+        .all()
+    )
+    return render_template("tickets/view.html", ticket=ticket, comments=comments)
 
 
 # Create new ticket
