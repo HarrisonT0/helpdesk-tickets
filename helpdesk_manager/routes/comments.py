@@ -46,3 +46,19 @@ def new_comment(ticket_id):
             return redirect(f"/tickets/{ticket_id}")
 
     return render_template("comments/new.html", ticket=ticket, error=error)
+
+
+# Delete comment
+@app.route("/tickets/<ticket_id>/comments/<comment_id>/delete", methods=["POST"])
+@require_auth
+def delete_comment(ticket_id, comment_id):
+    if not g.user.admin:
+        flash("You do not have permission to delete this comment.", "error")
+        return redirect(f"/tickets/{ticket_id}")
+
+    comment = Comment.query.get_or_404(comment_id)
+
+    db.session.delete(comment)
+    db.session.commit()
+    flash("Comment deleted.", "success")
+    return redirect(f"/tickets/{ticket_id}")
