@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}New Comment{% endblock %}
+
+{% block content %}
+<div class="centered-container">
+  <form action="/tickets/{{ ticket.id }}/comment" method="POST" class="box">
+    <h1>New Comment on &apos;{{ ticket.title }}&apos;</h1>
+    <label for="content">Content:</label>
+    <textarea name="content" id="content" required></textarea><br /><br />
+    <button type="submit" class="main-button">Create comment</button>
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}
