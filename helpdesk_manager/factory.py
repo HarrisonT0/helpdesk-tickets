@@ -17,6 +17,7 @@ def create_app():
         # Register table models
         from helpdesk_manager.models.user import User
         from helpdesk_manager.models.ticket import Ticket
+        from helpdesk_manager.models.comment import Comment
 
         db.create_all()
         seed_database()
@@ -26,5 +27,6 @@ def create_app():
         import helpdesk_manager.routes.auth
         import helpdesk_manager.routes.tickets
         import helpdesk_manager.routes.users
+        import helpdesk_manager.routes.comments
 
     return app
