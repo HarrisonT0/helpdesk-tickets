@@ -12,7 +12,7 @@
     {% if ticket.author.id == user.id %}
     <a href="/tickets/{{ ticket.id }}/edit"><button class="main-button">Edit ticket</button></a>
     {% endif %}
-    <a href="/tickets/{{ ticket.id }}/comment"><button class="main-button">Comment on ticket</button></a>
+    <a href="/tickets/{{ ticket.id }}/comments/new"><button class="main-button">Comment on ticket</button></a>
     {% if user.admin %}
     <form action="/tickets/{{ ticket.id }}/delete" method="POST"
       onsubmit="return confirm('Are you sure you want to delete this ticket?');">

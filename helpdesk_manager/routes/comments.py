@@ -14,7 +14,7 @@ from ..utils.require_auth import require_auth
 
 
 # Create new comment
-@app.route("/tickets/<ticket_id>/comment", methods=["GET", "POST"])
+@app.route("/tickets/<ticket_id>/comments/new", methods=["GET", "POST"])
 @require_auth
 def new_comment(ticket_id):
     error = None
