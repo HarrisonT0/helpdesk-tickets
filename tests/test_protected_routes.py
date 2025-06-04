@@ -10,6 +10,19 @@ def test_home_protection():
     assert MESSAGE in response.text
 
 
+# Comments
+
+
+def test_new_comment_protection():
+    response = requests.get(f"{ROUTE}/tickets/test/comments/new")
+    assert MESSAGE in response.text
+
+
+def test_delete_comment_protection():
+    response = requests.post(f"{ROUTE}/tickets/test/comments/test/delete")
+    assert MESSAGE in response.text
+
+
 # Tickets
 
 
