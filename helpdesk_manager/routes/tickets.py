@@ -38,7 +38,7 @@ def view_ticket(ticket_id):
         return redirect("/tickets")
     comments = (
         Comment.query.filter_by(ticket_id=ticket_id)
-        .order_by(Comment.created_at.desc())
+        .order_by(Comment.created_at.asc())
         .all()
     )
     return render_template("tickets/view.html", ticket=ticket, comments=comments)
