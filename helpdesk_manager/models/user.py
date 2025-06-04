@@ -19,3 +19,6 @@ class User(db.Model):
     tickets: Mapped[list["Ticket"]] = relationship(
         "Ticket", back_populates="author", cascade="all, delete-orphan"
     )
+    comments: Mapped[list["Comment"]] = relationship(
+        "Comment", back_populates="author", cascade="all, delete-orphan"
+    )

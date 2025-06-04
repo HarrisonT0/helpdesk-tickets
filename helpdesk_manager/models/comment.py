@@ -5,20 +5,20 @@ from sqlalchemy import String, ForeignKey, DateTime
 from datetime import datetime
 
 
-class Ticket(db.Model):
-    __tablename__ = "ticket"
+class Comment(db.Model):
+    __tablename__ = "comments"
 
     id: Mapped[str] = mapped_column(
         String(36), primary_key=True, default=lambda: str(uuid.uuid4())
     )
-    title: Mapped[str] = mapped_column(String(128), nullable=False)
     content: Mapped[str] = mapped_column(String(512), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
-    author_id: Mapped[str] = mapped_column(
+    author_id: Mapped[int] = mapped_column(
         ForeignKey("user.id", ondelete="CASCADE"), nullable=False
     )
-    author: Mapped["User"] = relationship("User", back_populates="tickets")
-    comments: Mapped[list["Comment"]] = relationship(
-        "Comment", back_populates="ticket", cascade="all, delete-orphan"
+    ticket_id: Mapped[int] = mapped_column(
+        ForeignKey("ticket.id", ondelete="CASCADE"), nullable=False
     )
+    author: Mapped["User"] = relationship("User", back_populates="comments")
+    ticket: Mapped["Ticket"] = relationship("Ticket", back_populates="comments")
