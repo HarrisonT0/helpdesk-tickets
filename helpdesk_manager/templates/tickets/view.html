@@ -19,5 +19,19 @@
     </form>
     {% endif %}
   </div>
+
+  {% if comments %}
+  <ul class="list">
+    {% for comment in comments %}
+    <li class="list-entry">
+      <h2>{{ comment.author.email }}</h2>
+      <p><i class="bi bi-clock"></i> Created at: {{ comment.created_at.strftime("%B %d, %Y %I:%M %p") }}</p>
+      <p>{{ comment.content }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No comments found.</p>
+  {% endif %}
 </div>
 {% endblock %}
