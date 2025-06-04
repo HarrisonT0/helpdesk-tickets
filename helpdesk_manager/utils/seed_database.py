@@ -1,6 +1,7 @@
 from ..database import db
 from ..models.user import User
 from ..models.ticket import Ticket
+from ..models.comment import Comment
 from werkzeug.security import generate_password_hash
 
 company_domain = "company.com"
@@ -28,11 +29,63 @@ tickets = {
     "Keyboard broken": "The desk at my keyboard is broken, and I will need a replacement to use my work machine.",
     "Password reset": "I have been logged out of my work laptop and forgotten the password, please reset, thanks",
 }
+comments = {
+    "ArgoCD": [
+        {
+            "admin": "Network benchmarks are coming back OK, are you sure you have configured everything correctly?"
+        },
+        {
+            "user": "Configuration looks to be valid to me - cannot hit the node via telnet however"
+        },
+        {
+            "admin": "I will forward you an email with the requirements for connectivity. Please check against them and reply if you can get things working. I will then close this ticket. Thanks."
+        },
+    ],
+    "Coffee Machine": [
+        {
+            "admin": "This is not the correct place for such tickets - please raise this with the estates team instead of the IT helpdesk!"
+        }
+    ],
+    "Password reset on system": [
+        {
+            "admin": "I have sent you a password reset email. Once we are notified your password update has gone through, I will come back and close this ticket as resolved. Thanks."
+        },
+        {
+            "user": "Great, I'll check that email out in a short while, thanks very much for sending that over"
+        },
+    ],
+    "Keyboard broken": [
+        {
+            "admin": "I have ordered in a new keyboard and it is ready for your collection at our desk. I will close this ticket as resolved once you have collected it. Thanks."
+        },
+        {
+            "user": "That's brilliant, thank you very much. What times are you open on Wednesday?"
+        },
+        {
+            "admin": "Unfortunately our in-person services are not available on Wednesdays - sorry. We will be open on Thursday from 9am - 6pm, if that works for you?"
+        },
+        {
+            "user": "No worries - I will pick it up on Thursday morning. Thanks for your help again."
+        },
+    ],
+}
 
 
 def seed_database():
-    # Create users and tickets
+    # Create admin
+    admin_email = f"admin@{company_domain}"
+    admin_user = User.query.filter_by(email=admin_email).first()
+    if not admin_user:
+        admin_user = User(
+            email=admin_email,
+            password_hash=generate_password_hash("Password123!"),
+            admin=True,
+        )
+        db.session.add(admin_user)
+
+    # Create users, tickets and comments
     for index, name in enumerate(names):
+        # Create user
         email = f"{name}@{company_domain}"
         user = User.query.filter_by(email=email).first()
         if not user:
@@ -42,20 +95,29 @@ def seed_database():
             )
             db.session.add(user)
 
+        # Create user ticket
         title = list(tickets)[index]
         content = list(tickets.values())[index]
-        if not Ticket.query.filter_by(title=title).first():
+        ticket = Ticket.query.filter_by(title=title).first()
+        if not ticket:
             ticket = Ticket(title=title, content=content, author_id=user.id)
             db.session.add(ticket)
 
-    # Create admin
-    admin_email = f"admin@{company_domain}"
-    if not User.query.filter_by(email=admin_email).first():
-        user = User(
-            email=admin_email,
-            password_hash=generate_password_hash("Password123!"),
-            admin=True,
-        )
-        db.session.add(user)
+        # Create ticket comments (if any)
+        ticket_comments = comments.get(title)
+        if ticket_comments:
+            for ticket_comment in ticket_comments:
+                if not Comment.query.filter_by(
+                    content=list(ticket_comment.values())[0]
+                ).first():
+                    comment_author_id = (
+                        admin_user.id if list(ticket_comment)[0] else user.id
+                    )
+                    comment = Comment(
+                        content=list(ticket_comment.values())[0],
+                        ticket_id=ticket.id,
+                        author_id=comment_author_id,
+                    )
+                    db.session.add(comment)
 
     db.session.commit()
