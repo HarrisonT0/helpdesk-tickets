@@ -1,4 +1,12 @@
-from flask import current_app as app, request, session, render_template, redirect, g
+from flask import (
+    current_app as app,
+    request,
+    session,
+    render_template,
+    redirect,
+    g,
+    Blueprint,
+)
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..models.user import User
 from ..database import db
@@ -8,8 +16,10 @@ import re
 # RegEx pattern matching strings of at least 6 characters with at least 1 number and 1 special character
 PASSWORD_REGEX = re.compile(r"^(?=.*[0-9])(?=.*[\W_]).{6,}$")
 
+auth_bp = Blueprint("auth", __name__, url_prefix="/")
 
-@app.route("/register", methods=["GET", "POST"])
+
+@auth_bp.route("/register", methods=["GET", "POST"])
 def register():
     error = None
 
@@ -42,7 +52,7 @@ def register():
     return render_template("auth/register.html", error=error)
 
 
-@app.route("/login", methods=["GET", "POST"])
+@auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     error = None
 
@@ -68,7 +78,7 @@ def login():
     return render_template("auth/login.html", error=error)
 
 
-@app.route("/logout")
+@auth_bp.route("/logout")
 def logout():
     session.clear()
     return redirect("/login")

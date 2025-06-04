@@ -1,20 +1,13 @@
-from flask import (
-    current_app as app,
-    request,
-    session,
-    render_template,
-    redirect,
-    url_for,
-    flash,
-    g,
-)
+from flask import render_template, redirect, flash, g, Blueprint
 from helpdesk_manager.models.user import User
 from ..database import db
 from ..utils.require_auth import require_auth
 
+users_bp = Blueprint("users", __name__, url_prefix="/users")
+
 
 # List users
-@app.route("/users")
+@users_bp.route("/")
 @require_auth
 def list_users():
     if not g.user.admin:
@@ -28,7 +21,7 @@ def list_users():
 
 
 # Delete user
-@app.route("/users/<user_id>/delete", methods=["POST"])
+@users_bp.route("/<user_id>/delete", methods=["POST"])
 @require_auth
 def delete_user(user_id):
     if not g.user.admin:
@@ -48,7 +41,7 @@ def delete_user(user_id):
 
 
 # Promote user to admin
-@app.route("/users/<user_id>/promote", methods=["POST"])
+@users_bp.route("/<user_id>/promote", methods=["POST"])
 @require_auth
 def promote_user(user_id):
     if not g.user.admin:
@@ -65,7 +58,7 @@ def promote_user(user_id):
 
 
 # Demote (admin) user to regular
-@app.route("/users/<user_id>/demote", methods=["POST"])
+@users_bp.route("/<user_id>/demote", methods=["POST"])
 @require_auth
 def demote_user(user_id):
     if not g.user.admin:

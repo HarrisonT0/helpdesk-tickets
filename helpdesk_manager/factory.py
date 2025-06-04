@@ -22,11 +22,17 @@ def create_app():
         db.create_all()
         seed_database()
 
-        # Register routes
-        import helpdesk_manager.routes.home
-        import helpdesk_manager.routes.auth
-        import helpdesk_manager.routes.tickets
-        import helpdesk_manager.routes.users
-        import helpdesk_manager.routes.comments
+        # Register blueprints
+        from helpdesk_manager.routes.tickets import tickets_bp
+        from helpdesk_manager.routes.auth import auth_bp
+        from helpdesk_manager.routes.comments import comments_bp
+        from helpdesk_manager.routes.users import users_bp
+        from helpdesk_manager.routes.home import home_bp
+
+        app.register_blueprint(home_bp)
+        app.register_blueprint(auth_bp)
+        app.register_blueprint(tickets_bp)
+        app.register_blueprint(users_bp)
+        app.register_blueprint(comments_bp)
 
     return app

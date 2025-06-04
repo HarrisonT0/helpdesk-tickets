@@ -1,20 +1,14 @@
-from flask import (
-    current_app as app,
-    request,
-    session,
-    render_template,
-    redirect,
-    flash,
-    g,
-)
+from flask import request, session, render_template, redirect, flash, g, Blueprint
 from helpdesk_manager.models.ticket import Ticket
 from helpdesk_manager.models.comment import Comment
 from ..database import db
 from ..utils.require_auth import require_auth
 
+tickets_bp = Blueprint("tickets", __name__, url_prefix="/tickets")
+
 
 # List tickets
-@app.route("/tickets")
+@tickets_bp.route("/")
 @require_auth
 def list_tickets():
     if g.user.admin:
@@ -29,7 +23,7 @@ def list_tickets():
 
 
 # View individual ticket (by ID)
-@app.route("/tickets/<ticket_id>")
+@tickets_bp.route("/<ticket_id>")
 @require_auth
 def view_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
@@ -45,7 +39,7 @@ def view_ticket(ticket_id):
 
 
 # Create new ticket
-@app.route("/tickets/new", methods=["GET", "POST"])
+@tickets_bp.route("/new", methods=["GET", "POST"])
 @require_auth
 def new_ticket():
     error = None
@@ -78,7 +72,7 @@ def new_ticket():
 
 
 # Edit ticket
-@app.route("/tickets/<ticket_id>/edit", methods=["GET", "POST"])
+@tickets_bp.route("/<ticket_id>/edit", methods=["GET", "POST"])
 @require_auth
 def edit_ticket(ticket_id):
     error = None
@@ -110,7 +104,7 @@ def edit_ticket(ticket_id):
 
 
 # Delete ticket
-@app.route("/tickets/<ticket_id>/delete", methods=["POST"])
+@tickets_bp.route("/<ticket_id>/delete", methods=["POST"])
 @require_auth
 def delete_ticket(ticket_id):
     if not g.user.admin:

@@ -1,20 +1,16 @@
-from flask import (
-    current_app as app,
-    request,
-    session,
-    render_template,
-    redirect,
-    flash,
-    g,
-)
+from flask import request, session, render_template, redirect, flash, g, Blueprint
 from helpdesk_manager.models.comment import Comment
 from helpdesk_manager.models.ticket import Ticket
 from ..database import db
 from ..utils.require_auth import require_auth
 
+comments_bp = Blueprint(
+    "comments", __name__, url_prefix="/tickets/<ticket_id>/comments"
+)
+
 
 # Create new comment
-@app.route("/tickets/<ticket_id>/comments/new", methods=["GET", "POST"])
+@comments_bp.route("/new", methods=["GET", "POST"])
 @require_auth
 def new_comment(ticket_id):
     error = None
@@ -49,7 +45,7 @@ def new_comment(ticket_id):
 
 
 # Delete comment
-@app.route("/tickets/<ticket_id>/comments/<comment_id>/delete", methods=["POST"])
+@comments_bp.route("/<comment_id>/delete", methods=["POST"])
 @require_auth
 def delete_comment(ticket_id, comment_id):
     if not g.user.admin:
