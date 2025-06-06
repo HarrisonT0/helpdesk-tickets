@@ -111,7 +111,7 @@ def seed_database():
                     content=list(ticket_comment.values())[0]
                 ).first():
                     comment_author_id = (
-                        admin_user.id if list(ticket_comment)[0] else user.id
+                        admin_user.id if list(ticket_comment)[0] == "admin" else user.id
                     )
                     comment = Comment(
                         content=list(ticket_comment.values())[0],
