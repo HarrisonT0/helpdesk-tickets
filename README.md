@@ -28,4 +28,4 @@ Once the app is running, you can log into any of the default user accounts creat
 ## Development
 Commits follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.  
 `ruff` is used for linting and formatting.  
-`pytest` is used for (unit) testing critical functionality via endpoints.  
+`pytest` is used for (unit) testing critical functionality via endpoints - use `pytest tests/` to run the unit tests.
