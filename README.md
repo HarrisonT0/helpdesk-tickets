@@ -23,6 +23,8 @@ source .venv/bin/activate  # Or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
+You can then start the app by running `python main.py`. This will start the webserver which you can access on `localhost` over port 5000 (by default).
+
 Once the app is running, you can log into any of the default user accounts created in the database seed script (such as *admin@company.com*), using the default password: *Password123!*. You can see the seed script for more details at `helpdesk_management/utils/seed_database.py`
 
 ## Development
