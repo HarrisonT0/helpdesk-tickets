@@ -7,6 +7,8 @@
 
 Web-app for handling IT helpdesk tickets and users.
 
+The app is deployed on render, which you can access with [this link](https://helpdesk-tickets.onrender.com/)
+
 ## Run
 The app was initialised using `uv`. If you have `uv`, you can clone the repo and run
 ```
