@@ -23,6 +23,8 @@ source .venv/bin/activate  # Or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
+Once the app is running, you can log into any of the default user accounts created in the database seed script (such as *admin@company.com*), using the default password: *Password123!*. You can see the seed script for more details at `helpdesk_management/utils/seed_database.py`
+
 ## Development
 Commits follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.  
 `ruff` is used for linting and formatting.  
