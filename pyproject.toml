@@ -16,3 +16,6 @@ dev = [
     "requests>=2.32.3",
     "ruff>=0.11.12",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"helpdesk_manager/models/*.py" = ["F821"]
