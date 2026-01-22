@@ -56,3 +56,30 @@ jobs:
         with:
           path: ./
           extra_args: --debug --only-verified --exclude-paths=.trufflehogignore
+  
+  container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t helpdesk-app .
+
+      - name: Docker image vulnerability scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: helpdesk-app
+          format: table
+          exit-code: 1
+          ignore-unfixed: false
+          vuln-type: "os,library"
+
+      - name: Container smoke test
+        run: |
+          docker run -d --name helpdesk-app -p 5000:5000 helpdesk-app
+          sleep 5
+          curl -f http://localhost:5000 || exit 1
+          docker stop helpdesk-app
+
