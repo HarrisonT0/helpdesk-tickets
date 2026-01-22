@@ -11,15 +11,33 @@ tickets_bp = Blueprint("tickets", __name__, url_prefix="/tickets")
 @tickets_bp.route("/")
 @require_auth
 def list_tickets():
+    page = request.args.get("page", default=1, type=int)
+    page_size = 5
+
     if g.user.admin:
-        tickets = Ticket.query.order_by(Ticket.created_at.desc()).all()
+        tickets = (
+            Ticket.query.order_by(Ticket.created_at.desc())
+            .offset(page_size * (page - 1))
+            .limit(page_size + 1)
+            .all()
+        )
     else:
         tickets = (
             Ticket.query.filter_by(author_id=g.user.id)
             .order_by(Ticket.created_at.desc())
+            .offset(page_size * (page - 1))
+            .limit(page_size + 1)
             .all()
         )
-    return render_template("tickets/list.html", tickets=tickets)
+
+    has_next_page = len(tickets) == page_size + 1
+
+    return render_template(
+        "tickets/list.html",
+        tickets=tickets[:page_size],
+        page=page,
+        has_next_page=has_next_page,
+    )
 
 
 # View individual ticket (by ID)
