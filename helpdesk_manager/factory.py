@@ -1,14 +1,17 @@
 from flask import Flask
 from .database import db
 from .utils.seed_database import seed_database
+from dotenv import load_dotenv
+import os
 
 
 def create_app():
     app = Flask(__name__)
 
     # Database config
+    load_dotenv()
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///helpdesk.db"
-    app.config["SECRET_KEY"] = "SECRET_CHANGE_ME"
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "fallback-secret-for-dev-only")
     db.init_app(app)
 
     # App context
