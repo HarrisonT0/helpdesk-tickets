@@ -1,6 +1,7 @@
 from flask import request, session, render_template, redirect, flash, g, Blueprint
 from helpdesk_manager.models.ticket import Ticket
 from helpdesk_manager.models.comment import Comment
+from helpdesk_manager.utils.methods import paginate_query
 from ..database import db
 from ..utils.require_auth import require_auth
 
@@ -11,30 +12,19 @@ tickets_bp = Blueprint("tickets", __name__, url_prefix="/tickets")
 @tickets_bp.route("/")
 @require_auth
 def list_tickets():
+    tickets_query = Ticket.query.order_by(Ticket.created_at.desc())
+
+    # Filter tickets to only own user's if non-admin
+    if not g.user.admin:
+        tickets_query = tickets_query.filter_by(author_id=g.user.id)
+
     page = request.args.get("page", default=1, type=int)
-    page_size = 5
 
-    if g.user.admin:
-        tickets = (
-            Ticket.query.order_by(Ticket.created_at.desc())
-            .offset(page_size * (page - 1))
-            .limit(page_size + 1)
-            .all()
-        )
-    else:
-        tickets = (
-            Ticket.query.filter_by(author_id=g.user.id)
-            .order_by(Ticket.created_at.desc())
-            .offset(page_size * (page - 1))
-            .limit(page_size + 1)
-            .all()
-        )
-
-    has_next_page = len(tickets) == page_size + 1
+    tickets, has_next_page = paginate_query(tickets_query, page)
 
     return render_template(
         "tickets/list.html",
-        tickets=tickets[:page_size],
+        tickets=tickets,
         page=page,
         has_next_page=has_next_page,
     )

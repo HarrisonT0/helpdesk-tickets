@@ -1,5 +1,6 @@
 from flask import render_template, redirect, flash, g, Blueprint, request
 from helpdesk_manager.models.user import User
+from helpdesk_manager.utils.methods import paginate_query
 from ..database import db
 from ..utils.require_auth import require_auth
 
@@ -14,21 +15,17 @@ def list_users():
         flash("You do not have permission to view users.", "error")
         return redirect("/")
 
-    page = request.args.get("page", default=1, type=int)
-    page_size = 5
+    users_query = User.query.with_entities(
+        User.id, User.email, User.created_at, User.admin
+    ).order_by(User.created_at.desc())
 
-    users = (
-        User.query.with_entities(User.id, User.email, User.created_at, User.admin)
-        .order_by(User.created_at.desc())
-        .offset(page_size * (page - 1))
-        .limit(page_size + 1)
-        .all()
-    )
-    has_next_page = len(users) == page_size + 1
+    page = request.args.get("page", default=1, type=int)
+
+    users, has_next_page = paginate_query(users_query, page)
 
     return render_template(
         "/users/list.html",
-        users=users[:page_size],
+        users=users,
         page=page,
         has_next_page=has_next_page,
     )
