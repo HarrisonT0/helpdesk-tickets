@@ -22,6 +22,14 @@ jobs:
 
       - name: Check formatting
         run: uv run ruff format --check .
+      
+      - name: Run full tests suites
+        run: |
+          uv run main.py &
+          sleep 5
+          uv run pytest -v .
+          pkill -f "main.py"
+    
   
   security:
     runs-on: ubuntu-latest
