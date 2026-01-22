@@ -7,14 +7,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: Cache uv
-        uses: actions/cache@v4
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/uv
           key: uv-${{ hashFiles('pyproject.toml') }}
@@ -22,8 +17,25 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: Ruff lint
+      - name: Lint
         run: uv run ruff check .
 
-      - name: Ruff format check
+      - name: Check formatting
         run: uv run ruff format --check .
+  
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ hashFiles('pyproject.toml') }}
+      
+      - name: Install dependencies
+        run: uv sync
+      
+      - name: Dependency vulnerability scan
+        run: uv run pip-audit --progress-spinner off
