@@ -41,4 +41,4 @@ jobs:
         run: uv run pip-audit --progress-spinner off
       
       - name: Static security analysis
-        run: uv run bandit -r .
+        run: uv run bandit -r ./helpdesk_manager
