@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, g, Blueprint
+from flask import render_template, redirect, flash, g, Blueprint, request
 from helpdesk_manager.models.user import User
 from ..database import db
 from ..utils.require_auth import require_auth
@@ -14,10 +14,24 @@ def list_users():
         flash("You do not have permission to view users.", "error")
         return redirect("/")
 
-    users = User.query.with_entities(
-        User.id, User.email, User.created_at, User.admin
-    ).all()
-    return render_template("/users/list.html", users=users)
+    page = request.args.get("page", default=1, type=int)
+    page_size = 5
+
+    users = (
+        User.query.with_entities(User.id, User.email, User.created_at, User.admin)
+        .order_by(User.created_at.desc())
+        .offset(page_size * (page - 1))
+        .limit(page_size + 1)
+        .all()
+    )
+    has_next_page = len(users) == page_size + 1
+
+    return render_template(
+        "/users/list.html",
+        users=users[:page_size],
+        page=page,
+        has_next_page=has_next_page,
+    )
 
 
 # Delete user
