@@ -1,4 +1,5 @@
 # Helpdesk Manager
+![Pipeline](https://github.com/HarrisonT0/helpdesk-tickets/actions/workflows/pipeline.yaml/badge.svg)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)
