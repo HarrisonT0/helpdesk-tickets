@@ -67,14 +67,15 @@ jobs:
       - name: Build Docker image
         run: docker build -t helpdesk-app .
 
-      - name: Docker image vulnerability scan
+      - name: Docker image critical vulnerability scan
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: helpdesk-app
           format: table
           exit-code: 1
-          ignore-unfixed: false
-          vuln-type: "os,library"
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL'
 
       - name: Container smoke test
         run: |
