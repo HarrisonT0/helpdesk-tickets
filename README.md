@@ -10,7 +10,7 @@ Web-app for handling IT helpdesk tickets and users.
 
 The app is deployed on render, which you can access with [this link](https://helpdesk-tickets.onrender.com/)
 
-## Run
+## Run locally
 The app was initialised using `uv`. If you have `uv`, you can clone the repo and run
 ```
 uv venv .venv
@@ -26,11 +26,27 @@ source .venv/bin/activate  # Or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
-You can then start the app by running `python main.py`. This will start the webserver which you can access on `localhost` over port 5000 (by default).
+You can then start the app by running `python main.py`. This will start the webserver which you can access on `localhost` over port 5000 (by default), using the URI `http://localhost:5000`.
+
+A secret key is used for cryptographic functions, which can be set with the `SECRET_KEY` environment variable. This can be set either when running the program (such as `SECRET_KEY=secret python main.py` on Unix systems), or by populating a `.env` file at the project root with `SECRET_KEY=secret`. If a secret key is not set, the program will fallback to a default one for development environments - **This is not recommended for production environments**.
 
 Once the app is running, you can log into any of the default user accounts created in the database seed script (such as *admin@company.com*), using the default password: *Password123!*. You can see the seed script for more details at `helpdesk_management/utils/seed_database.py`
+
+## Run containerised
+You can also run the project with Docker, using the provided `Dockerfile`.
+Build an image of the project locally with:
+```
+docker build -t helpdesk-tickets:latest .
+```
+You can then run a container with this image using:
+```
+docker run -p 5000:5000 helpdesk-tickets:latest
+```
+This will also consume the secret key variable from the environment.
 
 ## Development
 Commits follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.  
 `ruff` is used for linting and formatting.  
-`pytest` is used for (unit) testing critical functionality via endpoints - use `pytest tests/` to run the unit tests.
+`pytest` is used for (unit) testing critical functionality via endpoints - use `pytest tests/` to run the unit tests whilst the web application is running on localhost:5000.  
+`pip-audit` is used for dependency vulnerability scanning.  
+`bandit` is used for static security analysis.  
