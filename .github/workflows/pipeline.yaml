@@ -42,3 +42,11 @@ jobs:
       
       - name: Static security analysis
         run: uv run bandit -r ./helpdesk_manager
+      
+      - name: Secret scanning
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified --fail --exclude-paths=.trufflehogignore
