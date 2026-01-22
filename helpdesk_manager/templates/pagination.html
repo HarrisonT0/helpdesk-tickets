@@ -1,0 +1,11 @@
+<nav class="pagination">
+  {% if page > 1 %}
+  <a href="?page={{ page - 1 }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ page }}</span>
+
+  {% if has_next_page %}
+  <a href="?page={{ page + 1 }}">Next</a>
+  {% endif %}
+</nav>

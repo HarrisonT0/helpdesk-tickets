@@ -152,6 +152,11 @@ nav {
   padding: 1rem;
 }
 
+.pagination {
+  margin-top: 1.25rem;
+  border-radius: 8px;
+}
+
 /* Flash messages */
 
 .flashes {
