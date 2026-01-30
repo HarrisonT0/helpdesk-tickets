@@ -3,6 +3,7 @@ from .database import db
 from .utils.seed_database import seed_database
 from dotenv import load_dotenv
 import os
+import logging
 
 
 def create_app():
@@ -19,6 +20,13 @@ def create_app():
         # Register Database
         db.create_all()
         seed_database()
+
+        # Setup logging
+        logging.basicConfig(
+            level=logging.INFO,
+            format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+        )
+        app.logger.setLevel(logging.INFO)
 
         # Register Blueprints
         from helpdesk_manager.routes.tickets import tickets_bp
