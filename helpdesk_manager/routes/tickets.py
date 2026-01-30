@@ -1,4 +1,13 @@
-from flask import request, session, render_template, redirect, flash, g, Blueprint
+from flask import (
+    request,
+    session,
+    render_template,
+    redirect,
+    flash,
+    g,
+    Blueprint,
+    current_app as app,
+)
 from helpdesk_manager.models.ticket import Ticket
 from helpdesk_manager.models.comment import Comment
 from helpdesk_manager.utils.methods import paginate_query
@@ -36,6 +45,12 @@ def list_tickets():
 def view_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
     if (not g.user.admin) and (g.user.id != ticket.author.id):
+        app.logger.warning(
+            "Unauthorised ticket access attempt ip=%s user_id=%s ticket_id=%s",
+            request.remote_addr,
+            g.user.id,
+            ticket_id,
+        )
         flash("You do not have permission to view this ticket.", "error")
         return redirect("/tickets")
     comments = (
@@ -88,6 +103,12 @@ def edit_ticket(ticket_id):
 
     # Check user is author of ticket
     if ticket.author_id != g.user.id:
+        app.logger.warning(
+            "Unauthorised ticket edit attempt ip=%s user_id=%s ticket_id=%s",
+            request.remote_addr,
+            g.user.id,
+            ticket_id,
+        )
         flash("You do not have permission to edit this ticket.", "error")
         return redirect("/tickets")
 
@@ -116,6 +137,12 @@ def edit_ticket(ticket_id):
 @require_auth
 def delete_ticket(ticket_id):
     if not g.user.admin:
+        app.logger.warning(
+            "Non-admin ticket deletion attempt ip=%s user_id=%s ticket_id=%s",
+            request.remote_addr,
+            g.user.id,
+            ticket_id,
+        )
         flash("You do not have permission to delete this ticket.", "error")
         return redirect("/tickets")
 
