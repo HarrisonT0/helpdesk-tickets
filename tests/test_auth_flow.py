@@ -104,6 +104,24 @@ def test_login():
         assert "View tickets here" in home_response.text
 
 
+def test_login_invalid_password():
+    with requests.Session() as session:
+        # Log in to default admin account
+        login_response = session.post(
+            f"{ROUTE}/login",
+            data={
+                "email": "admin@company.com",
+                "password": "wrongpassword",
+            },
+        )
+
+        # Confirm login request responded
+        assert login_response
+
+        # Confirm login failed with correct reason
+        assert "Invalid password" in login_response.text
+
+
 def test_logout():
     with requests.Session() as session:
         # Log in to default admin account
