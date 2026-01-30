@@ -1,4 +1,12 @@
-from flask import render_template, redirect, flash, g, Blueprint, request
+from flask import (
+    render_template,
+    redirect,
+    flash,
+    g,
+    Blueprint,
+    request,
+    current_app as app,
+)
 from helpdesk_manager.models.user import User
 from helpdesk_manager.utils.methods import paginate_query
 from ..database import db
@@ -12,6 +20,11 @@ users_bp = Blueprint("users", __name__, url_prefix="/users")
 @require_auth
 def list_users():
     if not g.user.admin:
+        app.logger.warning(
+            "Non-admin users access attempt ip=%s user_id=%s",
+            request.remote_addr,
+            g.user.id,
+        )
         flash("You do not have permission to view users.", "error")
         return redirect("/")
 
@@ -36,6 +49,12 @@ def list_users():
 @require_auth
 def delete_user(user_id):
     if not g.user.admin:
+        app.logger.warning(
+            "Non-admin user deletion attempt ip=%s actor_user_id=%s target_user_id=%s",
+            request.remote_addr,
+            g.user.id,
+            user_id,
+        )
         flash("You do not have permission to delete this user.", "error")
         return redirect("/users")
 
@@ -56,6 +75,12 @@ def delete_user(user_id):
 @require_auth
 def promote_user(user_id):
     if not g.user.admin:
+        app.logger.warning(
+            "Non-admin user promotion attempt ip=%s actor_user_id=%s target_user_id=%s",
+            request.remote_addr,
+            g.user.id,
+            user_id,
+        )
         flash("You do not have permission to promote this user.", "error")
         return redirect("/users")
 
@@ -73,6 +98,12 @@ def promote_user(user_id):
 @require_auth
 def demote_user(user_id):
     if not g.user.admin:
+        app.logger.warning(
+            "Non-admin user demotion attempt ip=%s actor_user_id=%s target_user_id=%s",
+            request.remote_addr,
+            g.user.id,
+            user_id,
+        )
         flash("You do not have permission to demote this user.", "error")
         return redirect("/users")
 
