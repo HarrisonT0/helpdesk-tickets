@@ -26,6 +26,63 @@ def test_register():
         assert "View tickets here" in home_response.text
 
 
+def test_register_weak_password():
+    with requests.Session() as session:
+        # Register a new account with weak password
+        register_response = session.post(
+            f"{ROUTE}/register",
+            data={
+                "email": f"test-{uuid.uuid4()}@company.com",
+                "password": "password",
+                "confirm_password": "password",
+            },
+        )
+
+        # Confirm register request responded
+        assert register_response
+
+        # Confirm register failed with correct reason
+        assert "Stronger password required" in register_response.text
+
+
+def test_register_non_matching_password():
+    with requests.Session() as session:
+        # Register a new account with non-matching confirmation password
+        register_response = session.post(
+            f"{ROUTE}/register",
+            data={
+                "email": f"test-{uuid.uuid4()}@company.com",
+                "password": "Password123!",
+                "confirm_password": "Password123!!",
+            },
+        )
+
+        # Confirm register request responded
+        assert register_response
+
+        # Confirm register failed with correct reason
+        assert "Passwords do not match" in register_response.text
+
+
+def test_register_existing_email():
+    with requests.Session() as session:
+        # Register a new account with existing email
+        register_response = session.post(
+            f"{ROUTE}/register",
+            data={
+                "email": "admin@company.com",
+                "password": "Password123!",
+                "confirm_password": "Password123!",
+            },
+        )
+
+        # Confirm register request responded
+        assert register_response
+
+        # Confirm register failed with correct reason
+        assert "Invalid email" in register_response.text
+
+
 def test_login():
     with requests.Session() as session:
         # Log in to default admin account

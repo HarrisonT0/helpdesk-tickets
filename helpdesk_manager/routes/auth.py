@@ -50,7 +50,7 @@ def register():
                 email,
             )
         elif User.query.filter_by(email=email).first():
-            error = "User with this email already exists. Please Log in."
+            error = "Invalid email provided. Please use another email."
             app.logger.warning(
                 "Registration with existing user attempted ip=%s email=%s",
                 request.remote_addr,
