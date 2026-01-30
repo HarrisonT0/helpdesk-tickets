@@ -1,6 +1,9 @@
 FROM python:3.12-slim
 WORKDIR /app
 
+# Get up-to-date system dependencies
+RUN apt-get update && apt-get upgrade -y
+
 # Copy of metadata and dependencies
 COPY pyproject.toml pyproject.toml
 COPY uv.lock uv.lock
