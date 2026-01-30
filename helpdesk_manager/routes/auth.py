@@ -32,12 +32,30 @@ def register():
         # Validation
         if not email or not password or not confirm_password:
             error = "All fields are required."
+            app.logger.warning(
+                "Registration with missing fields attempted ip=%s", request.remote_addr
+            )
         elif password != confirm_password:
             error = "Passwords do not match."
+            app.logger.warning(
+                "Registration with mismatched passwords attempted ip=%s email=%s",
+                request.remote_addr,
+                email,
+            )
         elif not PASSWORD_REGEX.match(password):
             error = "Stronger password required. Must be at least 6 characters, contain at least one number, and contain at least one special character."
+            app.logger.warning(
+                "Registration with weak password attempted ip=%s email=%s",
+                request.remote_addr,
+                email,
+            )
         elif User.query.filter_by(email=email).first():
             error = "User with this email already exists. Please Log in."
+            app.logger.warning(
+                "Registration with existing user attempted ip=%s email=%s",
+                request.remote_addr,
+                email,
+            )
 
         # If all checks pass
         else:
@@ -47,6 +65,9 @@ def register():
             db.session.commit()
 
             session["user_id"] = user.id
+            app.logger.info(
+                "New user registered ip=%s email=%s", request.remote_addr, email
+            )
             return redirect("/")
 
     return render_template("auth/register.html", error=error)
@@ -67,8 +88,18 @@ def login():
         # Validation
         if user is None:
             error = "Invalid email."
+            app.logger.warning(
+                "Login with non-existing user attempted ip=%s email=%s",
+                request.remote_addr,
+                email,
+            )
         elif not check_password_hash(user.password_hash, password):
             error = "Invalid password."
+            app.logger.warning(
+                "Login with invalid password attempted ip=%s email=%s",
+                request.remote_addr,
+                email,
+            )
 
         # If all checks pass
         else:
