@@ -1,4 +1,13 @@
-from flask import request, session, render_template, redirect, flash, g, Blueprint
+from flask import (
+    request,
+    session,
+    render_template,
+    redirect,
+    flash,
+    g,
+    Blueprint,
+    current_app as app,
+)
 from helpdesk_manager.models.comment import Comment
 from helpdesk_manager.models.ticket import Ticket
 from ..database import db
@@ -18,6 +27,12 @@ def new_comment(ticket_id):
 
     ticket = Ticket.query.get_or_404(ticket_id)
     if not (g.user.admin or ticket.author_id == user_id):
+        app.logger.warning(
+            "Unauthorised ticket comment attempt ip=%s user_id=%s ticket_id=%s",
+            request.remote_addr,
+            g.user.id,
+            ticket_id,
+        )
         flash("You do not have permission to comment on this ticket.", "error")
         return redirect(f"/tickets/{ticket_id}")
 
@@ -49,6 +64,12 @@ def new_comment(ticket_id):
 @require_auth
 def delete_comment(ticket_id, comment_id):
     if not g.user.admin:
+        app.logger.warning(
+            "Non-admin comment deletion attempt ip=%s user_id=%s comment_id=%s",
+            request.remote_addr,
+            g.user.id,
+            comment_id,
+        )
         flash("You do not have permission to delete this comment.", "error")
         return redirect(f"/tickets/{ticket_id}")
 
