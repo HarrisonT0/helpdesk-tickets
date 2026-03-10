@@ -119,7 +119,7 @@ def test_login_invalid_password():
         assert login_response
 
         # Confirm login failed with correct reason
-        assert "Invalid password" in login_response.text
+        assert "Incorrect login details" in login_response.text
 
 
 def test_logout():
@@ -175,4 +175,4 @@ def test_login_wrong_password():
     )
 
     # Confirm log in did not succeed
-    assert "Invalid password" in login_response.text
+    assert "Incorrect login details" in login_response.text
