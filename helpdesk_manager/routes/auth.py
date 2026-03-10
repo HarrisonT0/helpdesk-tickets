@@ -87,14 +87,14 @@ def login():
 
         # Validation
         if user is None:
-            error = "Invalid email."
+            error = "Incorrect login details."
             app.logger.warning(
                 "Login with non-existing user attempted ip=%s email=%s",
                 request.remote_addr,
                 email,
             )
         elif not check_password_hash(user.password_hash, password):
-            error = "Invalid password."
+            error = "Incorrect login details."
             app.logger.warning(
                 "Login with invalid password attempted ip=%s email=%s",
                 request.remote_addr,
